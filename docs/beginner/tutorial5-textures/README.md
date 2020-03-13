@@ -22,19 +22,16 @@ let dimensions = diffuse_image.dimensions();
 Here we just grab the bytes from our image file, and load them into an image, which we then convert into a `Vec` of rgba bytes. We also save the image's dimensions for when we create the actual `Texture`. Speaking of creating the actual `Texture`.
 
 ```rust
+// All textures are stored as 3d, we represent our 2d texture
+// by setting depth to 1.
 let size = wgpu::Extent3d {
     width: dimensions.0,
     height: dimensions.1,
     depth: 1,
 };
 let diffuse_texture = device.create_texture(&wgpu::TextureDescriptor {
-    // All textures are stored as 3d, we represent our 2d texture
-    // by setting depth to 1.
-    size: wgpu::Extent3d {
-        width: dimensions.0,
-        height: dimensions.1,
-        depth: 1,
-    },
+
+    size: size,
     // You can store multiple textures of the same size in one
     // Texture object
     array_layer_count: 1,
